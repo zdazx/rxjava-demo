@@ -1,0 +1,53 @@
+package com.rxjava.demo.example1;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+
+public class Example1 {
+    public static Observer<Integer> createObserver() {
+        return new Observer<Integer>() {
+
+            private Disposable disposable;
+
+            public void onSubscribe(Disposable disposable) {
+                System.out.println("start");
+                this.disposable = disposable;
+            }
+
+            public void onNext(Integer s) {
+                if (s == 2) {
+//                    this.disposable.dispose();
+                    System.out.println("isDisposed:" + this.disposable.isDisposed());
+                }
+                System.out.println(s);
+            }
+
+            public void onError(Throwable throwable) {
+                System.out.println("Error");
+            }
+
+            public void onComplete() {
+                System.out.println("completed");
+            }
+        };
+    }
+
+    public static Observable<Integer> createObservable() {
+        return Observable.create(new ObservableOnSubscribe<Integer>() {
+            public void subscribe(ObservableEmitter<Integer> observableEmitter) {
+                observableEmitter.onNext(1);
+                observableEmitter.onNext(2);
+                observableEmitter.onNext(3);
+                observableEmitter.onComplete();
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        createObservable().subscribe(createObserver());
+    }
+
+}
