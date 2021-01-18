@@ -2,6 +2,7 @@ package com.rxjava.demo.example3;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 
 import java.util.Arrays;
@@ -12,15 +13,15 @@ public class FromExample {
         List<Integer> integers = Arrays.asList(1, 2, 3, 4, null, 5);
         Observable.fromIterable(integers)
                 .subscribe(new Observer<Integer>() {
-                    public void onSubscribe(Disposable disposable) {
+                    public void onSubscribe(@NonNull Disposable disposable) {
                         System.out.println("start");
                     }
 
-                    public void onNext(Integer integer) {
+                    public void onNext(@NonNull Integer integer) {
                         System.out.println(integer);
                     }
 
-                    public void onError(Throwable throwable) {
+                    public void onError(@NonNull Throwable throwable) {
                         System.out.println("error");
                     }
 
