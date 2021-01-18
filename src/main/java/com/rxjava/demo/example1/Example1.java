@@ -4,6 +4,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 
 public class Example1 {
@@ -12,12 +13,12 @@ public class Example1 {
 
             private Disposable disposable;
 
-            public void onSubscribe(Disposable disposable) {
+            public void onSubscribe(@NonNull Disposable disposable) {
                 System.out.println("start");
                 this.disposable = disposable;
             }
 
-            public void onNext(Integer s) {
+            public void onNext(@NonNull Integer s) {
                 if (s == 2) {
 //                    this.disposable.dispose();
                     System.out.println("isDisposed:" + this.disposable.isDisposed());
@@ -25,7 +26,7 @@ public class Example1 {
                 System.out.println(s);
             }
 
-            public void onError(Throwable throwable) {
+            public void onError(@NonNull Throwable throwable) {
                 System.out.println("Error");
             }
 
@@ -37,7 +38,7 @@ public class Example1 {
 
     public static Observable<Integer> createObservable() {
         return Observable.create(new ObservableOnSubscribe<Integer>() {
-            public void subscribe(ObservableEmitter<Integer> observableEmitter) {
+            public void subscribe(@NonNull ObservableEmitter<Integer> observableEmitter) {
                 observableEmitter.onNext(1);
                 observableEmitter.onNext(2);
                 observableEmitter.onNext(3);
